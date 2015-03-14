@@ -1,0 +1,32 @@
+@(form: Form[(String, String)])(implicit flash: Flash)
+
+@main("Welcome to Elemica") {
+    <div class="navigation">
+    <ul >
+        <li> SEARCH</li>
+        <li> CONNECT</li>
+        <li> OPERATE</li>
+    </ul>
+    </div>
+    <div class="login">
+       <div class="logo"><img src="@routes.Assets.at("images/merc-logo.png")" height="200px" width="200px"></div>
+
+        @flash.get("success").getOrElse("")
+        @flash.get("error").getOrElse("")
+        <div class="form">
+            <form action="@routes.Application.login()" method="post">
+
+            <input type="text" name="email" placeholder="Email"  />
+            <input type="password" name="password" placeholder="Password" />
+                <div class="control">
+                    <a href="#">Forgot password?</a>
+                    <button type="submit" class="button" >LOGIN</button>
+                </div>
+                <br class="clear"/>
+            </form>
+        </div>
+
+        <p>By clicking Login you accept the Mercury <a href="#">Privacy Policy</a></p>
+        <p class="footer"><a href="#">Having trouble logging in?</a></p>
+    </div>
+}

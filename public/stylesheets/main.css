@@ -1,0 +1,98 @@
+body {
+    background: #25AAE1 url('../images/bg-login2x.png') no-repeat fixed left;
+}
+
+div.content{
+    width:350px;
+    margin:0px auto;
+    text-align:left;
+    padding:15px;
+}
+
+div.navigation ul{
+    font-family: "Open Sans";
+    font-weight: bold;
+    font-size: 14px;
+    color: #186082;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+div.navigation ul li{
+    float: left;
+    width:115px;
+}
+
+.login, .login a{
+    font-family:"Open Sans";
+    font-size: 13px;
+    color:#fafafa;
+    text-align: center;
+}
+
+
+.login .logo{
+    padding: 40px;
+    text-align: center;
+}
+
+
+.form{
+    margin-bottom: 60px;
+}
+
+.form input {
+    border:none;
+    border-bottom:1px solid #25AAE1;
+    width:91%;
+    padding: 15px;
+    font-family: "Open Sans";
+    font-size: 17px;
+    color: #5d5d5d;
+    background-color: #fafafa;
+
+}
+.form input[name = "email"]{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.form input[name = "password"]{
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.form .control{
+    padding-top:15px;
+}
+
+.form .control .button {
+    font-family: "OpenSans-Bold";
+    font-size: 13px;
+    color: #fafafa;
+    background-color: #3e3e3e;
+    padding:10px;
+    float:right;
+    border:none;
+    width:30%;
+    border-radius:3px;
+}
+
+.form .control a {
+    float:left;
+}
+
+.clear{
+    clear:both;
+}
+.footer{
+    border-top:1px solid #4ab5e5;
+    padding-top:15px;
+}
+
+h2.welcome{
+    margin-top:50px;
+}
+
+
+

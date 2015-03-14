@@ -1,0 +1,3 @@
+email.error.email = Please enter a valid email
+email.error.required = Email is required
+password.error.required = Password is required
