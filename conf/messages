@@ -1,3 +1,5 @@
-email.error.email = Please enter a valid email
-email.error.required = Email is required
-password.error.required = Password is required
+nav.search = SEARCH
+nav.connect = CONNECT
+nav.operate = OPERATE
+invalid.email.and.password = Please enter a valid email and password.
+email.and.password.no.match = Email and password entered do not match

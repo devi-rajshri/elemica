@@ -4,48 +4,49 @@ import models.{ElemicaUser, DB}
 import play.api._
 import play.api.data.{FormError, Form}
 import play.api.data.Forms._
+import play.api.i18n.Messages
 import play.api.mvc._
 import play.api.data.validation.Constraints.nonEmpty
 
-object Application extends Controller with Secured{
-
-  def index = Action { implicit request =>
-    Ok(views.html.index(loginForm))
-  }
-
+object Application extends Controller with Secured {
   val loginForm = Form{
-   tuple (
+    tuple (
       "email" -> email.verifying(nonEmpty),
       "password" -> nonEmptyText
     )
   }
 
+  def index = Action { implicit request =>
+    Ok(views.html.index(loginForm))
+  }
+
+
   def login = Action { implicit request =>
       loginForm.bindFromRequest().fold(
         formWithErrors => {
           onUnauthorized(request).flashing(
-            "error" -> "Please enter a valid email and password."
+            "error" -> Messages("invalid.email.and.password")
           )
 
         },
-        loginUser => {
+        loginUserPass => {
           val user: Option[ElemicaUser] = DB.query[ElemicaUser]
-            .whereEqual("email", loginUser._1).whereEqual("password", loginUser._2).fetchOne()
-
+                                          .whereEqual("email", loginUserPass._1)
+                                          .whereEqual("password", loginUserPass._2).fetchOne()
           user.map { u =>
             val name = u.first + " " + u.last
-            Redirect(routes.Application.loggedIn()).withSession(Security.username -> name)
+            Redirect(routes.Application.dashboard()).withSession(Security.username -> name)
 
           }.getOrElse {
             onUnauthorized(request).flashing(
-              "error" -> "Email and password entered do not match"
+              "error" -> Messages("email.and.password.no.match")
             )
           }
         })
 
   }
 
-  def loggedIn = withAuth { username => implicit request =>
+  def dashboard = withAuth { username => implicit request =>
     Ok(views.html.dashboard(username))
   }
 

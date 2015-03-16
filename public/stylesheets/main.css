@@ -37,6 +37,11 @@ div.navigation ul li{
     text-align: center;
 }
 
+.login .logo img {
+    width:200px;
+    height: 200px;
+}
+
 
 .form{
     margin-bottom: 60px;

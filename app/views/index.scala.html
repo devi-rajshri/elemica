@@ -1,15 +1,9 @@
 @(form: Form[(String, String)])(implicit flash: Flash)
 
 @main("Welcome to Elemica") {
-    <div class="navigation">
-    <ul >
-        <li> SEARCH</li>
-        <li> CONNECT</li>
-        <li> OPERATE</li>
-    </ul>
-    </div>
+    @_nav()
     <div class="login">
-       <div class="logo"><img src="@routes.Assets.at("images/merc-logo.png")" height="200px" width="200px"></div>
+       <div class="logo"><img src="@routes.Assets.at("images/merc-logo.png")"></div>
 
         @flash.get("success").getOrElse("")
         @flash.get("error").getOrElse("")

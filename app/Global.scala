@@ -5,8 +5,8 @@ object Global extends GlobalSettings {
 
   override def onStart(app: Application) {
     super.onStart(app)
-    DB.save(ElemicaUser("devi", "menon","devi@email.com", "password"))
-
+    DB.save(ElemicaUser("User", "One","user@email.com", "password"))
+    DB.save(ElemicaUser("Test", "Last","test@email.com", "password"))
   }
 
 }

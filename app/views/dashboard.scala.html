@@ -1,14 +1,8 @@
 @(message: String)
 
 @main(message+" 's Elemica") {
-    <div class="navigation">
-        <ul >
-            <li> SEARCH</li>
-            <li> CONNECT</li>
-            <li> OPERATE</li>
-        </ul>
-    </div>
+    @_nav()
     <div class="login">
-     <h2 class="welcome"> Welcome @message </h2>
+     <h2 class="welcome"> Here's your Dashboard , @message </h2>
     </div>
 }
