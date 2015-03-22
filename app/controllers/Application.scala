@@ -7,6 +7,7 @@ import play.api.data.Forms._
 import play.api.i18n.Messages
 import play.api.mvc._
 import play.api.data.validation.Constraints.nonEmpty
+import org.mindrot.jbcrypt.BCrypt
 
 object Application extends Controller with Secured {
   val loginForm = Form{
@@ -30,14 +31,19 @@ object Application extends Controller with Secured {
 
         },
         loginUserPass => {
+
           val user: Option[ElemicaUser] = DB.query[ElemicaUser]
-                                          .whereEqual("email", loginUserPass._1)
-                                          .whereEqual("password", loginUserPass._2).fetchOne()
-          user.map { u =>
-            val name = u.first + " " + u.last
+                                          .whereEqual("email", loginUserPass._1).fetchOne()
+
+          val validUser :Boolean = user match {
+            case Some(u) => BCrypt.checkpw(loginUserPass._2, u.password)
+            case None => false
+          }
+          if(validUser){
+            val name = user.map(u => u.first + " " + u.last).get // This will never be a none if valid user
             Redirect(routes.Application.dashboard()).withSession(Security.username -> name)
 
-          }.getOrElse {
+          }else {
             onUnauthorized(request).flashing(
               "error" -> Messages("email.and.password.no.match")
             )

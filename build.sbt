@@ -11,6 +11,7 @@ libraryDependencies ++= Seq(
   "org.sorm-framework" % "sorm" % "0.3.18",
   cache,
   filters,
+  "org.mindrot" % "jbcrypt" % "0.3m",
   ws
 )
 
