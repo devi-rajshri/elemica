@@ -62,7 +62,7 @@ trait Secured {
 
   def username(request: RequestHeader) = request.session.get(Security.username)
 
-  def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.Application.index())
+  def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.Application.index()).flashing( "error" -> "You are unauthorized")
 
   def withAuth(f: => String => Request[AnyContent] => Result) = {
     Security.Authenticated(username, onUnauthorized) { username =>

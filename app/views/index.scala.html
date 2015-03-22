@@ -1,4 +1,7 @@
-@(form: Form[(String, String)])(implicit flash: Flash)
+@(elemicaForm: Form[(String, String)])(implicit flash: Flash, request: RequestHeader)
+
+
+@import helper._
 
 @main("Welcome to Elemica") {
     @_nav()
@@ -9,9 +12,10 @@
         @flash.get("error").getOrElse("")
         <div class="form">
             <form action="@routes.Application.login()" method="post">
+            @CSRF.formField
 
-            <input type="text" name="email" placeholder="Email"  />
-            <input type="password" name="password" placeholder="Password" />
+                <input type="text" name="email" placeholder="Email" />
+                <input type="password" name="password" placeholder="Password" />
                 <div class="control">
                     <a href="#">Forgot password?</a>
                     <button type="submit" class="button" >LOGIN</button>

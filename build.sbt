@@ -10,6 +10,7 @@ libraryDependencies ++= Seq(
   jdbc,
   "org.sorm-framework" % "sorm" % "0.3.18",
   cache,
+  filters,
   ws
 )
 
