@@ -1,8 +1,9 @@
+@()(implicit request:RequestHeader)
 <div class="navigation">
     <ul >
         <li> @Messages("nav.search")</li>
         <li> @Messages("nav.connect")</li>
         <li> @Messages("nav.operate")</li>
-        <li><a href="@routes.Application.logout()">Logout</a></li>
+         @if(request.session.get(Security.username).isDefined) {<li><a href="@routes.Application.logout()">Logout</a></li>}
     </ul>
 </div>

@@ -1,13 +1,16 @@
 package controllers
 
+import controllers.helper.HashHelper
 import models.{ElemicaUser, DB}
 import play.api._
+import play.api.cache.Cache
 import play.api.data.{FormError, Form}
 import play.api.data.Forms._
 import play.api.i18n.Messages
 import play.api.mvc._
 import play.api.data.validation.Constraints.nonEmpty
-import org.mindrot.jbcrypt.BCrypt
+import play.api.Play.current
+
 
 object Application extends Controller with Secured {
   val loginForm = Form{
@@ -36,14 +39,16 @@ object Application extends Controller with Secured {
                                           .whereEqual("email", loginUserPass._1).fetchOne()
 
           val validUser :Boolean = user match {
-            case Some(u) => BCrypt.checkpw(loginUserPass._2, u.password)
+            case Some(u) => HashHelper.checkPassword(loginUserPass._2, u.password)
             case None => false
           }
-          if(validUser){
-            val name = user.map(u => u.first + " " + u.last).get // This will never be a none if valid user
-            Redirect(routes.Application.dashboard()).withSession(Security.username -> name)
+          if (validUser) {
+            val u = user.get // This will never be a none if valid user
+            val username = u.first + " " + u.last
+            Cache.set(username, u, 300) //Times out after 5 mins of inactivity
+            Redirect(routes.Application.dashboard()).withSession(Security.username -> username)
 
-          }else {
+          } else {
             onUnauthorized(request).flashing(
               "error" -> Messages("email.and.password.no.match")
             )
@@ -68,11 +73,13 @@ trait Secured {
 
   def username(request: RequestHeader) = request.session.get(Security.username)
 
-  def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.Application.index()).flashing( "error" -> "You are unauthorized")
+  def hasTimedOut(name: String) = Cache.getAs[ElemicaUser](name).isEmpty
+
+  def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.Application.index()).withNewSession.flashing( "error" -> "You are unauthorized")
 
   def withAuth(f: => String => Request[AnyContent] => Result) = {
     Security.Authenticated(username, onUnauthorized) { username =>
-      Action(request => f(username)(request))
+      Action(request => if(hasTimedOut(username)) onUnauthorized(request) else f(username)(request))
     }
   }
 

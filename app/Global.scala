@@ -1,3 +1,4 @@
+import controllers.helper.HashHelper
 import models.{ElemicaUser, DB}
 import play.api.mvc.WithFilters
 import play.api.{Application, GlobalSettings}
@@ -9,8 +10,8 @@ object Global extends WithFilters(CSRFFilter(),SecurityHeadersFilter()) with Glo
 
   override def onStart(app: Application) {
     super.onStart(app)
-    DB.save(ElemicaUser("User", "One","user@email.com", BCrypt.hashpw("password", BCrypt.gensalt())))
-    DB.save(ElemicaUser("Test", "Last","test@email.com",  BCrypt.hashpw("password", BCrypt.gensalt())))
+    DB.save(ElemicaUser("User", "One","user@email.com", HashHelper.createPassword("password")))
+    DB.save(ElemicaUser("Test", "Last","test@email.com", HashHelper.createPassword("password")))
   }
 
 }
