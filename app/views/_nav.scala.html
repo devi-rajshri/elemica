@@ -4,6 +4,6 @@
         <li> @Messages("nav.search")</li>
         <li> @Messages("nav.connect")</li>
         <li> @Messages("nav.operate")</li>
-         @if(request.session.get(Security.username).isDefined) {<li><a href="@routes.Application.logout()">Logout</a></li>}
     </ul>
 </div>
+<div class="logout"> @if(request.session.get(Security.username).isDefined) { @request.session.get(Security.username).get , <a href="@routes.Application.logout()">Logout </a>}</div>

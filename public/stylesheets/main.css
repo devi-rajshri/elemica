@@ -24,6 +24,15 @@ div.navigation ul li{
     width:115px;
 }
 
+div.logout {
+    float:right;
+}
+div.logout a, div.logout {
+    font-family:"Open Sans";
+    font-size: 13px;
+    color:#fafafa;
+}
+
 .login, .login a{
     font-family:"Open Sans";
     font-size: 13px;
